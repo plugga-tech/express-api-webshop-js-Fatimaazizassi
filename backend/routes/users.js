@@ -1,79 +1,53 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const mongodb = require('mongodb')
 
-/* GET users listing. */
+/* GET all users */
 router.get('/', function (req, res, next) {
-  req.app.locals.db.collection('users').find().toArray()
+  req.app.locals.db.collection('users').find({}, { projection: { _id: 0}}).toArray()
   .then(results => {
-    let printUsers = `
-      <div>
-        <h2>All users</h2>
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-          </tr>
-    `
-
-    for(user in results) {
-      printUsers += `
-        <tr>
-          <td>${results[user].name}</td>
-          <td>${results[user].email}</td>
-        </tr>
-      `
-    }
-
-    printUsers += `
-        </table>
-      </div>       
-    `
-
-    res.send(printUsers);
+    res.json(results);
   })
-});
-
-/* Add new user form */
-router.get('/add', function(req, res, next){
-  const form = `
-    <form action="addNewUser" method="POST">
-      <input type="text" name="name" placeholder="Jon Doe"><br>
-      <input type="email" name="email" placeholder="jon.doe@email.com"><br>
-      <input type="password" id="passwoord" name="password"><br><br>
-
-      <button type="submit">Add user</button>
-    </form> 
-  `
-
-  res.send(form)
 })
-/* Post/Add new user */
-router.post('/addNewUser', function(req, res){
+
+/* POST - get one user by id */
+router.post('/', function (req, res, next) {
+  if (req.body.id) {
+    const id = new mongodb.ObjectId(req.body.id)
+    req.app.locals.db.collection('users').findOne({_id: id})
+    .then(results => {
+      res.json(results);
+    })
+  }
+})
+
+/* POST/Add new user */
+router.post('/add', function(req, res, next){
   req.app.locals.db.collection('users').insertOne(req.body)
   .then(results => {
-    res.send(`
-      Successfully added <strong>${req.body.name}</strong> as new user 🎉.<br>
-      Click to see -> <a href="/api/users">all users</a>.
-    `)
+    res.json(results)
   })
 })
 
-/* User login form */
-router.get('/login', function(req, res, next){
-  const form = `
-    <form action="loginUser" method="POST">
-      <input type="email" name="email" placeholder="jon.doe@email.com"><br>
-      <input type="password" id="passwoord" name="password"><br><br>
-
-      <button type="submit">Login</button>
-    </form> 
-  `
-
-  res.send(form)
-})
-/* Login user */
-router.post('/loginUser', function(req, res){
-  res.send('Hello! You are Successfully logged in 🎉.' )
+/* POST - User login */
+router.post('/login', function(req, res, next){
+  console.log(req.body.password)
+  req.app.locals.db.collection('users').findOne({email: req.body.email})
+  .then(results => {
+    if (results) {
+      if (req.body.password == results.password) {
+        res.send(`Hello ${results.name}! You are successfully logged in.`)
+      }else{
+        res.send('Password incorrect! Please try again.')
+      }
+    }
+    else {
+      res.send(`
+        Email incorrect! Couldn't find any user with email: ${req.body.email}.
+        Please try again.
+      `)
+    }
+  })
 })
 
 module.exports = router;

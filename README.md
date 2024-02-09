@@ -1,8 +1,9 @@
-
 # Fatima's API
 
 ## Enviroment Requirements
 * NodeJS https://nodejs.org/en/download
+* MongoDB https://www.mongodb.com/docs/manual/tutorial/
+    * Make sure MongoDB is runing `brew services start mongodb-community`
 
 ## Get statrted
 ```
@@ -12,6 +13,12 @@ npm install
 nodemon app.js
 ```
 Gå to http://localhost:3000/ on  your browser.
+
+## API documentation
+* Users
+    * GET all users -> /api/users
+    * POST/ADD user -> /api/users/add 
+    * Login user    -> /api/users/login
 
 
 

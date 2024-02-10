@@ -4,7 +4,7 @@ const mongodb = require('mongodb')
 
 /* GET all products */
 router.get('/', function (req, res, next) {
-  req.app.locals.db.collection('products').find({}, { projection: { _id: 0}}).toArray()
+  req.app.locals.db.collection('products').find().toArray()
   .then(results => {
     res.json(results);
   })

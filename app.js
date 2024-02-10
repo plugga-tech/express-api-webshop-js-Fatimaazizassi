@@ -18,11 +18,13 @@ app.use(express.urlencoded({ extended: false }));
 
 const indexRouter = require('./backend/routes/index');
 const usersRouter = require('./backend/routes/users');
-const productsRouter = require('./backend/routes/products.js');
+const productsRouter = require('./backend/routes/products');
+const ordersRouter = require('./backend/routes/orders');
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/orders', ordersRouter);
 
 app.listen(port)
 

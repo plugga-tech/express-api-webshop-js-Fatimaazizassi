@@ -22,3 +22,13 @@ For the test-g.rest to work, you need Rest-Client (extension) installed for vsc.
     * POST specific user    -> /api/users
     * POST/ADD user         -> /api/users/add 
     * POST Login user       -> /api/users/login
+
+* products
+    * GET all users         -> /api/products
+    * POST specific user    -> /api/products
+    * POST/ADD user         -> /api/products/add
+
+* orders
+    * GET all users         -> /api/orders/all
+    * POST/ADD user         -> /api/orders/add
+

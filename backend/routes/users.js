@@ -4,7 +4,7 @@ const mongodb = require('mongodb')
 
 /* GET all users */
 router.get('/', function (req, res, next) {
-  req.app.locals.db.collection('users').find({}, { projection: { _id: 0}}).toArray()
+  req.app.locals.db.collection('users').find({}, { password: 0}).toArray()
   .then(results => {
     res.json(results);
   })

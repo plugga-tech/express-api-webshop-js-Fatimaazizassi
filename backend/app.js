@@ -16,10 +16,10 @@ MongoClient.connect('mongodb://127.0.0.1:27017')
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const indexRouter = require('./backend/routes/index');
-const usersRouter = require('./backend/routes/users');
-const productsRouter = require('./backend/routes/products');
-const ordersRouter = require('./backend/routes/orders');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+const ordersRouter = require('./routes/orders');
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);

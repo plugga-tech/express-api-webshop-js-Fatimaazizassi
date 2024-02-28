@@ -10,7 +10,7 @@
 cd PATH/TO/PROJECT
 npm install -g nodemon
 npm install
-nodemon app.js
+nodemon backend/app.js
 ```
 Gå to http://localhost:3000/ on your browser.
 Use POSTMAN application or the test-g.rest to test the API.
@@ -31,4 +31,3 @@ For the test-g.rest to work, you need Rest-Client (extension) installed for vsc.
 * orders
     * GET all users         -> /api/orders/all
     * POST/ADD user         -> /api/orders/add
-
